@@ -1,38 +1,84 @@
-import { Link } from "expo-router";
-import { Text, View } from "react-native";
-import { useAuthStore } from "@/store/authStore";
-import { useEffect } from "react";
+import { View, Text, StyleSheet, Animated, Dimensions} from "react-native";
+import { Ionicons } from "@expo/vector-icons";
+import { useRouter } from "expo-router";
+import {LinearGradient} from "expo-linear-gradient";
+import { useEffect, useRef } from "react";
+import { Image } from "expo-image";
 
 
-interface Props {
-  checkAuth: () => Promise<void>;
-  user: any,
-  logout: () => Promise<void>;
-}
-export default function Index() {
+const { width } = Dimensions.get("window");
 
-  const {checkAuth,user,logout} = useAuthStore() as Props
+export default function SplashScreen() {
+  const router = useRouter();
+  const fadeAnim = useRef(new Animated.Value(0)).current;
+  const scaleAnim = useRef(new Animated.Value(0.5)).current;
 
   useEffect(() => {
-    checkAuth();
+    Animated.parallel([
+      Animated.timing(fadeAnim, {
+        toValue: 1,
+        duration: 1000,
+        useNativeDriver: true,
+      }),
+      Animated.spring(scaleAnim, {
+        toValue: 1,
+        tension: 10,
+        friction: 2,
+        useNativeDriver: true,
+      }),
+    ]).start();
+
+    const timer = setTimeout(() => {
+      router.replace("/(auth)");
+    }, 10000);
+
+    return () => clearTimeout(timer);
   }, []);
 
   return (
-    <View
-      style={{
-        flex: 1,
-        justifyContent: "center",
-        alignItems: "center",
-        marginVertical:30
-      }}
-    >
-      <Text>Hello{" "}{user?.name}</Text>
-      <Link style={{marginVertical:20}} href="/(auth)/signup">
-        <Text>signup</Text>
-      </Link>
-      <Link style={{marginVertical:20}} href="/(auth)">
-        <Text>Login</Text>
-      </Link>
-    </View>
+    <LinearGradient colors={["#39a6f8","#1a69d7"]} style={styles.container}>
+      <Animated.View
+        style={[
+          styles.iconContainer,
+          {
+            opacity: fadeAnim,
+            transform: [{ scale: scaleAnim }],
+          },
+        ]}
+      >
+      <View style={styles.topIllustration}>
+      <Image style={styles.illustrationImage} source={require("@/assets/images/splash.png")}  contentFit="contain"/>
+      </View>
+        
+        <Text style={styles.appName}>Bookcloud 🌨️</Text>
+      </Animated.View>
+    </LinearGradient>
   );
 }
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: "#4CAF50",
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  topIllustration: {
+    alignItems: "center",
+    width: "100%",
+  },
+  illustrationImage: {
+    width: width * 0.75,
+    height: width * 0.75,
+  },
+  iconContainer: {
+    alignItems: "center",
+  },
+  appName: {
+    color: "white",
+    fontSize: 32,
+    fontWeight: "bold",
+    marginTop: 20,
+    letterSpacing: 1,
+  },
+});

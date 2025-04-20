@@ -24,3 +24,9 @@ export interface LoginProps {
     
     
   }
+
+  export interface AuthState {
+    user: User | null;
+    token: string | null;
+    checkAuth: () => Promise<void> | void;
+  }
