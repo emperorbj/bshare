@@ -153,6 +153,9 @@ const styles = StyleSheet.create({
     textAlign: "center",
   },
   addButton: {
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "center",
     backgroundColor: COLORS.primary,
     borderRadius: 12,
     paddingVertical: 12,
@@ -167,6 +170,7 @@ const styles = StyleSheet.create({
     color: COLORS.white,
     fontWeight: "600",
     fontSize: 14,
+    marginLeft: 8,
   },
 });
 

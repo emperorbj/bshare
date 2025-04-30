@@ -63,7 +63,7 @@ export default function login() {
                         </View>
                     </View>
 
-                    {/* pasword */}
+                    {/* password */}
                     <View style={styles.inputGroup}>
                         <Text style={styles.label}>Password</Text>
                         <View style={styles.inputContainer}>
@@ -92,7 +92,7 @@ export default function login() {
                     <TouchableOpacity style={styles.button} onPress={handleLogin}>
                         {
                             isLoading ? (
-                                <ActivityIndicator size={20} color={COLORS.primary} />
+                                <ActivityIndicator size={20} color={COLORS.white} />
                             ) : (
                                 <Text style={styles.buttonText}>Login</Text>
                             )

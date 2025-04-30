@@ -4,7 +4,10 @@ import { SafeAreaProvider } from "react-native-safe-area-context";
 import { useAuthStore } from "@/store/authStore";
 import { useEffect } from "react";
 import { AuthState } from "@/types/data";
+import {QueryClient, QueryClientProvider} from "@tanstack/react-query"
 
+
+const queryClient = new QueryClient()
 
 
 
@@ -33,12 +36,14 @@ export default function RootLayout() {
     }
   },[user,token,segments])
 
-  return <SafeAreaProvider>
+  return <QueryClientProvider client={queryClient}>
+    <SafeAreaProvider>
     <SafeScreen>
     <Stack screenOptions={{ headerShown: false }} >
       <Stack.Screen name="(tabs)" />
       <Stack.Screen name="(auth)" />
     </Stack>;
     </SafeScreen>
-  </SafeAreaProvider>;
+  </SafeAreaProvider>
+  </QueryClientProvider>
 }

@@ -114,7 +114,7 @@ export default function signup() {
                     <TouchableOpacity style={styles.button} onPress={handleSignUp}>
                         {
                             isLoading ? (
-                                <ActivityIndicator size={20} color={COLORS.primary} />
+                                <ActivityIndicator size={20} color={COLORS.white} />
                             ) : (
                                 <Text style={styles.buttonText}>Login</Text>
                             )
@@ -126,7 +126,7 @@ export default function signup() {
                         <Text style={styles.footerText}>Do you have an account?</Text>
                         <Link href={"/(auth)"} asChild>
                             <TouchableOpacity>
-                                <Text style={styles.link}>Login</Text>
+                                <Text style={styles.link}>register</Text>
                             </TouchableOpacity>
                         </Link>
                     </View>
